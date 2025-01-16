@@ -29,7 +29,7 @@ mongoose
 // Middleware
 // Allow requests from specific origin
 const corsOptions = {
-  origin: ['http://localhost:5173', 'http://localhost:5174', 'https://pathey.netlify.app', 'http://localhost:4173/'], // Change this to your client URL
+  origin: ['http://localhost:5173', 'http://localhost:5174', 'https://pathey.netlify.app', 'http://localhost:4173'], // Change this to your client URL
   methods: 'GET,POST,PUT,DELETE', // Allowed HTTP methods
   credentials: true, // Allow credentials (cookies, authorization headers, etc.)
 };
