@@ -27,7 +27,13 @@ mongoose
   .catch((err) => console.error(err));
 
 // Middleware
-app.use(cors());
+// Allow requests from specific origin
+const corsOptions = {
+  origin: 'http://localhost:5173', // Change this to your client URL
+  methods: 'GET,POST,PUT,DELETE', // Allowed HTTP methods
+  credentials: true, // Allow credentials (cookies, authorization headers, etc.)
+};
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(fileUpload({
   useTempFiles: true
