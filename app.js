@@ -10,17 +10,17 @@ const cardRoutes = require('./routes/cardRoutes.routes');
 const authRoutes = require('./routes/authRoutes.routes');
 const adminRoutes = require("./routes/adminRoutes.routes");
 const fileUpload = require('express-fileupload');
+const path = require("path");
 
 
 
 const app = express();
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 5000;  
+
+
+const _dirname = path.resolve();
 
 // MongoDB Connection
-// mongoose
-//   .connect('mongodb://localhost:27017/patheyadb')
-//   .then(() => console.log('MongoDB Connected'))
-  // .catch((err) => console.error(err));
 mongoose
   .connect(process.env.MONGO_CLOUD_URI)
   .then(() => console.log('MongoDB Connected'))
@@ -29,7 +29,7 @@ mongoose
 // Middleware
 // Allow requests from specific origin
 const corsOptions = {
-  origin: ['http://localhost:5173', 'http://localhost:5174', 'https://pathey.netlify.app', 'http://localhost:4173'], // Change this to your client URL
+  origin: ['http://localhost:5173', 'http://localhost:5174', 'http://localhost:4173'], // Change this to your client URL
   methods: 'GET,POST,PUT,DELETE', // Allowed HTTP methods
   credentials: true, // Allow credentials (cookies, authorization headers, etc.)
 };
@@ -48,6 +48,11 @@ app.use("/auth", authRoutes);
 app.use('/admin', adminRoutes);
 // app.use("/api/blogs", blogRoutes);
 
+
+app.use(express.static(path.join(_dirname, "/client/dist")));
+app.get("*", (_, res)=>{
+  res.sendFile(path.resolve(_dirname, "client", "dist", "index.html"));
+});
 
 
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
